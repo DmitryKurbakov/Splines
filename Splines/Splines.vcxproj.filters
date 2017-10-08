@@ -21,10 +21,10 @@
     <ClCompile Include="SplinesFormController.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="Drawing.cpp">
+    <ClCompile Include="Algorithms.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="Algorithms.cpp">
+    <ClCompile Include="CurvesDrawing.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,10 +35,10 @@
     <ClInclude Include="SplinesFormController.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Drawing.h">
+    <ClInclude Include="Algorithms.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithms.h">
+    <ClInclude Include="CurvesDrawing.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

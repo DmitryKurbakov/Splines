@@ -134,13 +134,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Algorithms.cpp" />
-    <ClCompile Include="Drawing.cpp" />
+    <ClCompile Include="CurvesDrawing.cpp" />
     <ClCompile Include="SplinesForm.cpp" />
     <ClCompile Include="SplinesFormController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Algorithms.h" />
-    <ClInclude Include="Drawing.h" />
+    <ClInclude Include="CurvesDrawing.h" />
     <ClInclude Include="SplinesForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

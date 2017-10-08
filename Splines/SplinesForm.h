@@ -15,11 +15,13 @@ using namespace System::Drawing;
 public ref class SplinesForm : public System::Windows::Forms::Form
 {
 public:
+	SplinesFormController^ controller;
+
 	SplinesForm(void)
 	{
 		InitializeComponent();
 		
-		SplinesFormController^ controller = gcnew SplinesFormController();
+		controller = gcnew SplinesFormController(this->pictureBox);
 	}
 
 protected:
@@ -133,9 +135,12 @@ private:
 #pragma endregion
 
 private: System::Void pictureBox_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	Point cursorPoint = pictureBox->PointToClient(System::Windows::Forms::Cursor::Position);
+
 	if (this->bezierCurveArbitaryOrderRadioButton->Checked)
 	{
-		
+		controller->OnBezierCurveArbitaryOrderRadioButtonChecked(cursorPoint);
 	}
 }
 };
