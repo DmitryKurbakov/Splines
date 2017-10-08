@@ -15,10 +15,13 @@ private:
 	List<Point>^ referenceVertices;
 	CurvesDrawing^ curvesDrawing;
 
+	List<Point>^ compositeCurvesReferenceVertices;
+
 public:
 	SplinesFormController(PictureBox^ pb);
 	~SplinesFormController();
 
 	void OnBezierCurveArbitaryOrderRadioButtonChecked(Point point);
+	void OnBezierCurveCompositeRadioButton(Point point);
 };
 

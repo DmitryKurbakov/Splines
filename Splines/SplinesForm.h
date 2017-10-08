@@ -39,8 +39,13 @@ private: System::Windows::Forms::GroupBox^  pictureGroupBox;
 protected:
 private: System::Windows::Forms::PictureBox^  pictureBox;
 private: System::Windows::Forms::GroupBox^  toolsGroupBox;
+private: System::Windows::Forms::RadioButton^  bezierCurveElementaryRadioButton;
+private: System::Windows::Forms::RadioButton^  bezierCurveCompositeRadioButton;
+private: System::Windows::Forms::Button^  clearButton;
 
-private: System::Windows::Forms::RadioButton^  bezierCurveArbitaryOrderRadioButton;
+
+
+
 
 
 
@@ -60,7 +65,9 @@ private:
 		this->pictureGroupBox = (gcnew System::Windows::Forms::GroupBox());
 		this->pictureBox = (gcnew System::Windows::Forms::PictureBox());
 		this->toolsGroupBox = (gcnew System::Windows::Forms::GroupBox());
-		this->bezierCurveArbitaryOrderRadioButton = (gcnew System::Windows::Forms::RadioButton());
+		this->bezierCurveCompositeRadioButton = (gcnew System::Windows::Forms::RadioButton());
+		this->bezierCurveElementaryRadioButton = (gcnew System::Windows::Forms::RadioButton());
+		this->clearButton = (gcnew System::Windows::Forms::Button());
 		this->pictureGroupBox->SuspendLayout();
 		(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->BeginInit();
 		this->toolsGroupBox->SuspendLayout();
@@ -94,7 +101,8 @@ private:
 		// 
 		// toolsGroupBox
 		// 
-		this->toolsGroupBox->Controls->Add(this->bezierCurveArbitaryOrderRadioButton);
+		this->toolsGroupBox->Controls->Add(this->bezierCurveCompositeRadioButton);
+		this->toolsGroupBox->Controls->Add(this->bezierCurveElementaryRadioButton);
 		this->toolsGroupBox->Location = System::Drawing::Point(12, 12);
 		this->toolsGroupBox->Name = L"toolsGroupBox";
 		this->toolsGroupBox->Size = System::Drawing::Size(138, 264);
@@ -102,25 +110,47 @@ private:
 		this->toolsGroupBox->TabStop = false;
 		this->toolsGroupBox->Text = L"Инструменты";
 		// 
-		// bezierCurveArbitaryOrderRadioButton
+		// bezierCurveCompositeRadioButton
 		// 
-		this->bezierCurveArbitaryOrderRadioButton->AutoSize = true;
-		this->bezierCurveArbitaryOrderRadioButton->Checked = true;
-		this->bezierCurveArbitaryOrderRadioButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6, System::Drawing::FontStyle::Regular,
+		this->bezierCurveCompositeRadioButton->AutoSize = true;
+		this->bezierCurveCompositeRadioButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6, System::Drawing::FontStyle::Regular,
 			System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-		this->bezierCurveArbitaryOrderRadioButton->Location = System::Drawing::Point(6, 19);
-		this->bezierCurveArbitaryOrderRadioButton->Name = L"bezierCurveArbitaryOrderRadioButton";
-		this->bezierCurveArbitaryOrderRadioButton->Size = System::Drawing::Size(129, 13);
-		this->bezierCurveArbitaryOrderRadioButton->TabIndex = 0;
-		this->bezierCurveArbitaryOrderRadioButton->TabStop = true;
-		this->bezierCurveArbitaryOrderRadioButton->Text = L"Безье произвольного порядка";
-		this->bezierCurveArbitaryOrderRadioButton->UseVisualStyleBackColor = true;
+		this->bezierCurveCompositeRadioButton->Location = System::Drawing::Point(6, 38);
+		this->bezierCurveCompositeRadioButton->Name = L"bezierCurveCompositeRadioButton";
+		this->bezierCurveCompositeRadioButton->Size = System::Drawing::Size(82, 13);
+		this->bezierCurveCompositeRadioButton->TabIndex = 1;
+		this->bezierCurveCompositeRadioButton->Text = L"Безье cоставная";
+		this->bezierCurveCompositeRadioButton->UseVisualStyleBackColor = true;
+		// 
+		// bezierCurveElementaryRadioButton
+		// 
+		this->bezierCurveElementaryRadioButton->AutoSize = true;
+		this->bezierCurveElementaryRadioButton->Checked = true;
+		this->bezierCurveElementaryRadioButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6, System::Drawing::FontStyle::Regular,
+			System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
+		this->bezierCurveElementaryRadioButton->Location = System::Drawing::Point(6, 19);
+		this->bezierCurveElementaryRadioButton->Name = L"bezierCurveElementaryRadioButton";
+		this->bezierCurveElementaryRadioButton->Size = System::Drawing::Size(97, 13);
+		this->bezierCurveElementaryRadioButton->TabIndex = 0;
+		this->bezierCurveElementaryRadioButton->Text = L"Безье элементарная";
+		this->bezierCurveElementaryRadioButton->UseVisualStyleBackColor = true;
+		// 
+		// clearButton
+		// 
+		this->clearButton->Location = System::Drawing::Point(12, 406);
+		this->clearButton->Name = L"clearButton";
+		this->clearButton->Size = System::Drawing::Size(75, 23);
+		this->clearButton->TabIndex = 2;
+		this->clearButton->Text = L"Очистить";
+		this->clearButton->UseVisualStyleBackColor = true;
+		this->clearButton->Click += gcnew System::EventHandler(this, &SplinesForm::clearButton_Click);
 		// 
 		// SplinesForm
 		// 
 		this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 		this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 		this->ClientSize = System::Drawing::Size(680, 447);
+		this->Controls->Add(this->clearButton);
 		this->Controls->Add(this->toolsGroupBox);
 		this->Controls->Add(this->pictureGroupBox);
 		this->Name = L"SplinesForm";
@@ -138,10 +168,19 @@ private: System::Void pictureBox_Click(System::Object^  sender, System::EventArg
 
 	Point cursorPoint = pictureBox->PointToClient(System::Windows::Forms::Cursor::Position);
 
-	if (this->bezierCurveArbitaryOrderRadioButton->Checked)
+	if (this->bezierCurveElementaryRadioButton->Checked)
 	{
 		controller->OnBezierCurveArbitaryOrderRadioButtonChecked(cursorPoint);
 	}
+
+	if (this->bezierCurveCompositeRadioButton->Checked)
+	{
+		controller->OnBezierCurveCompositeRadioButton(cursorPoint);
+	}
+}
+private: System::Void clearButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	delete controller;
+	controller = gcnew SplinesFormController(this->pictureBox);
 }
 };
 

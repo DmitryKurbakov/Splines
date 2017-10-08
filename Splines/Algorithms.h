@@ -10,13 +10,16 @@ ref class Algorithms
 public:
 
 	List<PointF>^ brezierCurvesPointsList;
+	List<PointF>^ brezierCompositeCurve;
 
 	Algorithms();
 	~Algorithms();
 
 	void BrezierCurves(List<Point>^ rv);
+	void ThirdOrderCurve(List<Point>^ rv);
 
 	float Fact(float x);
 	PointF BezierFunction(float t, List<Point>^ rv);
+
 };
 
