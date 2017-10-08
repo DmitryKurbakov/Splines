@@ -1,7 +1,5 @@
 #include "Drawing.h"
 
-
-
 Drawing::Drawing()
 {
 }

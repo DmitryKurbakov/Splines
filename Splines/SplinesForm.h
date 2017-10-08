@@ -67,7 +67,6 @@ private:
 		this->pictureGroupBox->TabIndex = 0;
 		this->pictureGroupBox->TabStop = false;
 		this->pictureGroupBox->Text = L"Изображение";
-		this->pictureBox->Click += gcnew System::EventHandler(this, &SplinesForm::OnPictureBoxClick);
 		// 
 		// pictureBox
 		// 
@@ -95,12 +94,8 @@ private:
 
 	}
 #pragma endregion
-	void OnPictureBoxClick(System::Object ^sender, System::EventArgs ^e);
+	
 };
 
 
 
-void SplinesForm::OnPictureBoxClick(System::Object ^sender, System::EventArgs ^e)
-{
-	
-}

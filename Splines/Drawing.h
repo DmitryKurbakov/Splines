@@ -1,5 +1,9 @@
 #pragma once
-ref class Drawing
+
+#include "Algorithms.h"
+
+ref class Drawing :
+	public Algorithms
 {
 public:
 	Drawing();
