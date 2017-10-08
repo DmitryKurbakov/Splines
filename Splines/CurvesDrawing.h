@@ -14,5 +14,6 @@ public:
 
 	Bitmap^ DrawBrezierCurves(Bitmap^ bm, List<Point>^ points);
 	Bitmap^ DrawBrezierThirdOrder(Bitmap^ bm, List<Point>^ points);
+	Bitmap^ DrawCloseCurve(Bitmap^ bm, List<Point>^ points);
 };
 

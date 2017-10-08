@@ -4,7 +4,7 @@
 
 Algorithms::Algorithms()
 {
-	
+	brezierCompositeCurve = gcnew List<PointF>();
 }
 
 
@@ -23,9 +23,7 @@ void Algorithms::BrezierCurves(List<Point>^ rv)
 }
 
 void Algorithms::ThirdOrderCurve(List<Point>^ rv)
-{
-	brezierCompositeCurve = gcnew List<PointF>();
-
+{	
 	for (float t = 0.; t <= 1; t += 0.01)
 	{
 		brezierCompositeCurve->Add(BezierFunction(t, rv));

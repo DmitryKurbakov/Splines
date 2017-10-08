@@ -23,5 +23,6 @@ public:
 
 	void OnBezierCurveArbitaryOrderRadioButtonChecked(Point point);
 	void OnBezierCurveCompositeRadioButton(Point point);
+	void OnCloseCurveButtonClick();
 };
 

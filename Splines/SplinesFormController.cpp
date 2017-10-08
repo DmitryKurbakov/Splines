@@ -71,3 +71,12 @@ void SplinesFormController::OnBezierCurveCompositeRadioButton(Point point)
 		pictureBox->Image = resultImage;
 	}*/
 }
+
+void SplinesFormController::OnCloseCurveButtonClick()
+{
+	Bitmap^ bm = gcnew Bitmap(pictureBox->Image);
+	Bitmap^ resultImage = curvesDrawing->DrawCloseCurve(bm, compositeCurvesReferenceVertices);
+
+	delete pictureBox->Image;
+	pictureBox->Image = resultImage;
+}

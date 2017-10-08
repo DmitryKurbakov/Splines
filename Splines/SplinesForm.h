@@ -42,6 +42,7 @@ private: System::Windows::Forms::GroupBox^  toolsGroupBox;
 private: System::Windows::Forms::RadioButton^  bezierCurveElementaryRadioButton;
 private: System::Windows::Forms::RadioButton^  bezierCurveCompositeRadioButton;
 private: System::Windows::Forms::Button^  clearButton;
+private: System::Windows::Forms::Button^  closeCurveButton;
 
 
 
@@ -68,6 +69,7 @@ private:
 		this->bezierCurveCompositeRadioButton = (gcnew System::Windows::Forms::RadioButton());
 		this->bezierCurveElementaryRadioButton = (gcnew System::Windows::Forms::RadioButton());
 		this->clearButton = (gcnew System::Windows::Forms::Button());
+		this->closeCurveButton = (gcnew System::Windows::Forms::Button());
 		this->pictureGroupBox->SuspendLayout();
 		(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->BeginInit();
 		this->toolsGroupBox->SuspendLayout();
@@ -101,6 +103,7 @@ private:
 		// 
 		// toolsGroupBox
 		// 
+		this->toolsGroupBox->Controls->Add(this->closeCurveButton);
 		this->toolsGroupBox->Controls->Add(this->bezierCurveCompositeRadioButton);
 		this->toolsGroupBox->Controls->Add(this->bezierCurveElementaryRadioButton);
 		this->toolsGroupBox->Location = System::Drawing::Point(12, 12);
@@ -132,6 +135,7 @@ private:
 		this->bezierCurveElementaryRadioButton->Name = L"bezierCurveElementaryRadioButton";
 		this->bezierCurveElementaryRadioButton->Size = System::Drawing::Size(97, 13);
 		this->bezierCurveElementaryRadioButton->TabIndex = 0;
+		this->bezierCurveElementaryRadioButton->TabStop = true;
 		this->bezierCurveElementaryRadioButton->Text = L"Безье элементарная";
 		this->bezierCurveElementaryRadioButton->UseVisualStyleBackColor = true;
 		// 
@@ -144,6 +148,16 @@ private:
 		this->clearButton->Text = L"Очистить";
 		this->clearButton->UseVisualStyleBackColor = true;
 		this->clearButton->Click += gcnew System::EventHandler(this, &SplinesForm::clearButton_Click);
+		// 
+		// closeCurveButton
+		// 
+		this->closeCurveButton->Location = System::Drawing::Point(13, 57);
+		this->closeCurveButton->Name = L"closeCurveButton";
+		this->closeCurveButton->Size = System::Drawing::Size(75, 23);
+		this->closeCurveButton->TabIndex = 2;
+		this->closeCurveButton->Text = L"Замкнуть";
+		this->closeCurveButton->UseVisualStyleBackColor = true;
+		this->closeCurveButton->Click += gcnew System::EventHandler(this, &SplinesForm::closeCurveButton_Click);
 		// 
 		// SplinesForm
 		// 
@@ -181,6 +195,9 @@ private: System::Void pictureBox_Click(System::Object^  sender, System::EventArg
 private: System::Void clearButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	delete controller;
 	controller = gcnew SplinesFormController(this->pictureBox);
+}
+private: System::Void closeCurveButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	controller->OnCloseCurveButtonClick();
 }
 };
 
