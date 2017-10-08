@@ -61,13 +61,12 @@ private:
 			| System::Windows::Forms::AnchorStyles::Left)
 			| System::Windows::Forms::AnchorStyles::Right));
 		this->pictureGroupBox->Controls->Add(this->pictureBox);
-		this->pictureGroupBox->Location = System::Drawing::Point(12, 12);
+		this->pictureGroupBox->Location = System::Drawing::Point(180, 12);
 		this->pictureGroupBox->Name = L"pictureGroupBox";
-		this->pictureGroupBox->Size = System::Drawing::Size(656, 423);
+		this->pictureGroupBox->Size = System::Drawing::Size(488, 423);
 		this->pictureGroupBox->TabIndex = 0;
 		this->pictureGroupBox->TabStop = false;
 		this->pictureGroupBox->Text = L"Изображение";
-		this->pictureBox->Click += gcnew System::EventHandler(this, &SplinesForm::OnPictureBoxClick);
 		// 
 		// pictureBox
 		// 
@@ -77,7 +76,7 @@ private:
 		this->pictureBox->BackColor = System::Drawing::SystemColors::ControlLightLight;
 		this->pictureBox->Location = System::Drawing::Point(6, 19);
 		this->pictureBox->Name = L"pictureBox";
-		this->pictureBox->Size = System::Drawing::Size(644, 398);
+		this->pictureBox->Size = System::Drawing::Size(476, 398);
 		this->pictureBox->TabIndex = 0;
 		this->pictureBox->TabStop = false;
 		// 
@@ -95,12 +94,7 @@ private:
 
 	}
 #pragma endregion
-	void OnPictureBoxClick(System::Object ^sender, System::EventArgs ^e);
 };
 
 
 
-void SplinesForm::OnPictureBoxClick(System::Object ^sender, System::EventArgs ^e)
-{
-	
-}
