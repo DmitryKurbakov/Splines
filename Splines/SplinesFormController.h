@@ -37,6 +37,7 @@ public:
 	void OnBSplineCurveRadioButton(Point p, bool addToList);
 
 	void OnCloseCurveButtonClick();
+	void OnCloseBSplineButtonClick();
 
 	int ChooseMarker(Point p);
 };

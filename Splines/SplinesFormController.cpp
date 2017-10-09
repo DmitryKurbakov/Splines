@@ -94,6 +94,15 @@ void SplinesFormController::OnCloseCurveButtonClick()
 
 }
 
+void SplinesFormController::OnCloseBSplineButtonClick()
+{
+	Bitmap^ bm = gcnew Bitmap(pictureBox->Image);
+	Bitmap^ resultImage = curvesDrawing->DrawCloseBSpline(bm);
+
+	delete pictureBox->Image;
+	pictureBox->Image = resultImage;
+}
+
 int SplinesFormController::ChooseMarker(Point p)
 {
 	int min = 100000;

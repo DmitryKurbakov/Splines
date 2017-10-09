@@ -195,6 +195,7 @@ Bitmap ^ CurvesDrawing::DrawBSplines(Bitmap ^ bm, List<Point>^ points)
 
 	if (points->Count > 4)
 	{
+		List<Point>^ bsp1 = gcnew List<Point>();
 		List<Point>^ bsp = gcnew List<Point>();
 		bsp->Clear();
 		bSplines->Clear();
@@ -211,14 +212,15 @@ Bitmap ^ CurvesDrawing::DrawBSplines(Bitmap ^ bm, List<Point>^ points)
 
 		for (int i = 1; i < points->Count - 3; i++)
 		{
-			bsp->Clear();
-		
-			bsp->Add(points[i]);
-			bsp->Add(points[i + 1]);
-			bsp->Add(points[i + 2]);
-			bsp->Add(points[i + 3]);
 
-			BSpline^ bs = gcnew BSpline(bsp);
+			bsp1->Clear();
+		
+			bsp1->Add(points[i]);
+			bsp1->Add(points[i + 1]);
+			bsp1->Add(points[i + 2]);
+			bsp1->Add(points[i + 3]);
+
+			BSpline^ bs = gcnew BSpline(bsp1);
 			bs->FindPoints();
 			
 			bSplines->Add(bs);
@@ -261,4 +263,44 @@ Bitmap ^ CurvesDrawing::DrawBSplinesUsingList(Bitmap^ bm)
 	delete bluePen;
 	delete blackPen;
 	return bm;
+}
+
+Bitmap ^ CurvesDrawing::DrawCloseBSpline(Bitmap ^ bm)
+{
+	List<Point>^ points0 = gcnew List<Point>();
+
+	points0->Add(bSplines[bSplines->Count - 1]->vertices[1]);
+	points0->Add(bSplines[bSplines->Count - 1]->vertices[2]);
+	points0->Add(bSplines[bSplines->Count - 1]->vertices[3]);
+	points0->Add(bSplines[0]->vertices[0]);
+
+	BSpline^ bs0 = gcnew BSpline(points0);
+	bs0->FindPoints();
+
+	List<Point>^ points1 = gcnew List<Point>();
+	
+	points1->Add(bSplines[bSplines->Count - 1]->vertices[2]);
+	points1->Add(bSplines[bSplines->Count - 1]->vertices[3]);
+	points1->Add(bSplines[0]->vertices[0]);
+	points1->Add(bSplines[0]->vertices[1]);
+
+	BSpline^ bs1 = gcnew BSpline(points1);
+	bs1->FindPoints();
+
+	List<Point>^ points2 = gcnew List<Point>();
+	
+	points2->Add(bSplines[bSplines->Count - 1]->vertices[3]);
+	points2->Add(bSplines[0]->vertices[0]);
+	points2->Add(bSplines[0]->vertices[1]);
+	points2->Add(bSplines[0]->vertices[2]);
+
+	BSpline^ bs2 = gcnew BSpline(points2);
+	bs2->FindPoints();
+
+
+	bSplines->Add(bs0);
+	bSplines->Add(bs1);
+	bSplines->Add(bs2);
+
+	return DrawBSplinesUsingList(bm);
 }

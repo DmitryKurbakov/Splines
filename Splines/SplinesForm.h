@@ -17,6 +17,7 @@ public ref class SplinesForm : public System::Windows::Forms::Form
 public:
 	SplinesFormController^ controller;
 private: System::Windows::Forms::RadioButton^  bSplineCurveRadioButton;
+private: System::Windows::Forms::Button^  closeBSplineButton;
 public:
 	int mi = -1;
 
@@ -69,11 +70,12 @@ private:
 		this->pictureGroupBox = (gcnew System::Windows::Forms::GroupBox());
 		this->pictureBox = (gcnew System::Windows::Forms::PictureBox());
 		this->toolsGroupBox = (gcnew System::Windows::Forms::GroupBox());
+		this->bSplineCurveRadioButton = (gcnew System::Windows::Forms::RadioButton());
 		this->closeCurveButton = (gcnew System::Windows::Forms::Button());
 		this->bezierCurveCompositeRadioButton = (gcnew System::Windows::Forms::RadioButton());
 		this->bezierCurveElementaryRadioButton = (gcnew System::Windows::Forms::RadioButton());
 		this->clearButton = (gcnew System::Windows::Forms::Button());
-		this->bSplineCurveRadioButton = (gcnew System::Windows::Forms::RadioButton());
+		this->closeBSplineButton = (gcnew System::Windows::Forms::Button());
 		this->pictureGroupBox->SuspendLayout();
 		(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->BeginInit();
 		this->toolsGroupBox->SuspendLayout();
@@ -110,6 +112,7 @@ private:
 		// 
 		// toolsGroupBox
 		// 
+		this->toolsGroupBox->Controls->Add(this->closeBSplineButton);
 		this->toolsGroupBox->Controls->Add(this->bSplineCurveRadioButton);
 		this->toolsGroupBox->Controls->Add(this->closeCurveButton);
 		this->toolsGroupBox->Controls->Add(this->bezierCurveCompositeRadioButton);
@@ -120,6 +123,19 @@ private:
 		this->toolsGroupBox->TabIndex = 1;
 		this->toolsGroupBox->TabStop = false;
 		this->toolsGroupBox->Text = L"Инструменты";
+		// 
+		// bSplineCurveRadioButton
+		// 
+		this->bSplineCurveRadioButton->AutoSize = true;
+		this->bSplineCurveRadioButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6, System::Drawing::FontStyle::Regular,
+			System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
+		this->bSplineCurveRadioButton->Location = System::Drawing::Point(6, 86);
+		this->bSplineCurveRadioButton->Name = L"bSplineCurveRadioButton";
+		this->bSplineCurveRadioButton->Size = System::Drawing::Size(98, 13);
+		this->bSplineCurveRadioButton->TabIndex = 3;
+		this->bSplineCurveRadioButton->Text = L"B-сплайновая кривая";
+		this->bSplineCurveRadioButton->UseVisualStyleBackColor = true;
+		this->bSplineCurveRadioButton->CheckedChanged += gcnew System::EventHandler(this, &SplinesForm::OnCheckedbSplineChanged);
 		// 
 		// closeCurveButton
 		// 
@@ -155,6 +171,7 @@ private:
 		this->bezierCurveElementaryRadioButton->Name = L"bezierCurveElementaryRadioButton";
 		this->bezierCurveElementaryRadioButton->Size = System::Drawing::Size(97, 13);
 		this->bezierCurveElementaryRadioButton->TabIndex = 0;
+		this->bezierCurveElementaryRadioButton->TabStop = true;
 		this->bezierCurveElementaryRadioButton->Text = L"Безье элементарная";
 		this->bezierCurveElementaryRadioButton->UseVisualStyleBackColor = true;
 		this->bezierCurveElementaryRadioButton->CheckedChanged += gcnew System::EventHandler(this, &SplinesForm::OnCheckedChanged);
@@ -170,17 +187,16 @@ private:
 		this->clearButton->UseVisualStyleBackColor = true;
 		this->clearButton->Click += gcnew System::EventHandler(this, &SplinesForm::clearButton_Click);
 		// 
-		// bSplineCurveRadioButton
+		// closeBSplineButton
 		// 
-		this->bSplineCurveRadioButton->AutoSize = true;
-		this->bSplineCurveRadioButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6, System::Drawing::FontStyle::Regular,
-			System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-		this->bSplineCurveRadioButton->Location = System::Drawing::Point(6, 86);
-		this->bSplineCurveRadioButton->Name = L"bSplineCurveRadioButton";
-		this->bSplineCurveRadioButton->Size = System::Drawing::Size(98, 13);
-		this->bSplineCurveRadioButton->TabIndex = 3;
-		this->bSplineCurveRadioButton->Text = L"B-сплайновая кривая";
-		this->bSplineCurveRadioButton->UseVisualStyleBackColor = true;
+		this->closeBSplineButton->Enabled = false;
+		this->closeBSplineButton->Location = System::Drawing::Point(13, 105);
+		this->closeBSplineButton->Name = L"closeBSplineButton";
+		this->closeBSplineButton->Size = System::Drawing::Size(75, 23);
+		this->closeBSplineButton->TabIndex = 4;
+		this->closeBSplineButton->Text = L"Замкнуть";
+		this->closeBSplineButton->UseVisualStyleBackColor = true;
+		this->closeBSplineButton->Click += gcnew System::EventHandler(this, &SplinesForm::closeBSplineButton_Click);
 		// 
 		// SplinesForm
 		// 
@@ -242,6 +258,10 @@ private: System::Void closeCurveButton_Click(System::Object^  sender, System::Ev
 		 void OnMouseMove(System::Object ^sender, System::Windows::Forms::MouseEventArgs ^e);
 		 void OnCheckedChanged(System::Object ^sender, System::EventArgs ^e);
 		 void OnCompositeChanged(System::Object ^sender, System::EventArgs ^e);
+private: System::Void closeBSplineButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	controller->OnCloseBSplineButtonClick();
+}
+		 void OnCheckedbSplineChanged(System::Object ^sender, System::EventArgs ^e);
 };
 
 
@@ -303,6 +323,7 @@ void SplinesForm::OnMouseMove(System::Object ^sender, System::Windows::Forms::Mo
 
 void SplinesForm::OnCheckedChanged(System::Object ^sender, System::EventArgs ^e)
 {
+	closeBSplineButton->Enabled = false;
 	closeCurveButton->Enabled = false;
 	delete controller;
 	controller = gcnew SplinesFormController(this->pictureBox);
@@ -312,7 +333,14 @@ void SplinesForm::OnCheckedChanged(System::Object ^sender, System::EventArgs ^e)
 
 void SplinesForm::OnCompositeChanged(System::Object ^sender, System::EventArgs ^e)
 {
+	closeBSplineButton->Enabled = false;
 	//closeCurveButton->Enabled = true;
 	delete controller;
 	controller = gcnew SplinesFormController(this->pictureBox);
+}
+
+
+void SplinesForm::OnCheckedbSplineChanged(System::Object ^sender, System::EventArgs ^e)
+{
+	closeBSplineButton->Enabled = true;
 }
