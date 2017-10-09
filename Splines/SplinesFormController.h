@@ -34,7 +34,7 @@ public:
 
 	void OnBezierCurveArbitaryOrderRadioButtonChecked(Point point, bool addToList);
 	void OnBezierCurveCompositeRadioButton(Point point, bool addToList);
-	void OnBSplineCurveRadioButton(Point p);
+	void OnBSplineCurveRadioButton(Point p, bool addToList);
 
 	void OnCloseCurveButtonClick();
 

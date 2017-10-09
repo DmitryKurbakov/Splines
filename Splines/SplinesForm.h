@@ -224,11 +224,13 @@ private: System::Void pictureBox_Click(System::Object^  sender, System::EventArg
 
 	if (this->bSplineCurveRadioButton->Checked)
 	{
-		controller->OnBSplineCurveRadioButton(cursorPoint);
+		controller->OnBSplineCurveRadioButton(cursorPoint, true);
 	}
 }
 private: System::Void clearButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	delete controller;
+	delete pictureBox->Image;
+
 	controller = gcnew SplinesFormController(this->pictureBox);
 }
 private: System::Void closeCurveButton_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -288,6 +290,11 @@ void SplinesForm::OnMouseMove(System::Object ^sender, System::Windows::Forms::Mo
 			{
 				controller->compositeCurvesReferenceVertices[mi] = cursorPoint;
 				controller->OnBezierCurveCompositeRadioButton(cursorPoint, false);
+			}
+			if (bSplineCurveRadioButton->Checked)
+			{
+				controller->bSplinesCurveVertices[mi] = cursorPoint;
+				controller->OnBSplineCurveRadioButton(cursorPoint, false);
 			}
 		}
 	}

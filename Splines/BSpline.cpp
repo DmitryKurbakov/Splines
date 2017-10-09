@@ -43,8 +43,8 @@ PointF BSpline::BSplineFunction(float t)
 	float xS = x0 + x1 + x2 + x3;
 	float yS = y0 + y1 + y2 + y3;
 
-	float x = 0.16666666 * xS;
-	float y = 0.16666666 * yS;
+	float x = 0.17 * xS;
+	float y = 0.17 * yS;
 
 	PointF p;
 	p.X = x;

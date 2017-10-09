@@ -11,7 +11,7 @@ public Algorithms
 
 {
 public:
-	List<BSpline^> bSplines;
+	List<BSpline^>^ bSplines;
 
 	bool isDrew;
 
@@ -23,5 +23,7 @@ public:
 	Bitmap^ DrawCloseCurve(Bitmap^ bm, List<Point>^ points);
 
 	Bitmap^ DrawBSplines(Bitmap^ bm, List<Point>^ points);
+
+	Bitmap^ DrawBSplinesUsingList(Bitmap^ bm);
 };
 

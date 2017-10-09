@@ -62,18 +62,24 @@ void SplinesFormController::OnBezierCurveCompositeRadioButton(Point point, bool 
 
 }
 
-void SplinesFormController::OnBSplineCurveRadioButton(Point p)
+void SplinesFormController::OnBSplineCurveRadioButton(Point p, bool addToList)
 {
-	bSplinesCurveVertices->Add(p);
-
-	if (bSplinesCurveVertices->Count > 3)
+	Bitmap^ bm = gcnew Bitmap(pictureBox->Image->Width, pictureBox->Image->Height);
+	Bitmap^ resultImage;
+	if (addToList)
 	{
-		Bitmap^ bm = gcnew Bitmap(pictureBox->Image);
-		Bitmap^ resultImage = curvesDrawing->DrawBSplines(bm, bSplinesCurveVertices);
+		bSplinesCurveVertices->Add(p);
+		Marker^ m = gcnew Marker(p.X, p.Y);
 
-		delete pictureBox->Image;
-		pictureBox->Image = resultImage;
+		markers->Add(m);
 	}
+	
+	resultImage = curvesDrawing->DrawBSplines(bm, bSplinesCurveVertices);
+	
+	
+	delete pictureBox->Image;
+	pictureBox->Image = resultImage;
+	
 }
 
 void SplinesFormController::OnCloseCurveButtonClick()

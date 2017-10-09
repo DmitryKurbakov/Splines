@@ -4,6 +4,7 @@
 
 CurvesDrawing::CurvesDrawing()
 {
+	bSplines = gcnew List<BSpline^>();
 }
 
 
@@ -169,19 +170,91 @@ Bitmap ^ CurvesDrawing::DrawCloseCurve(Bitmap ^ bm, List<Point>^ points)
 
 Bitmap ^ CurvesDrawing::DrawBSplines(Bitmap ^ bm, List<Point>^ points)
 {
-	
-	BSpline^ s = gcnew BSpline(points);
-	s->FindPoints();
-
-	bSplines.Add(s);
-
 	Graphics^ gr = Graphics::FromImage(bm);
 	Pen^ bluePen = gcnew Pen(Color::Blue, 3);
-	Pen^ blackPen = gcnew Pen(Color::Black, 0.01f);
+	Pen^ blackPen = gcnew Pen(Color::Green, 0.01f);
 
-	for (int i = 0; i < s->points->Count - 1; i++)
+	for (int i = 0; i < points->Count - 1; i++)
 	{
-		gr->DrawLine(bluePen, s->points[i].X, s->points[i].Y, s->points[i + 1].X, s->points[i + 1].Y);
+		gr->DrawLine(blackPen, points[i].X, points[i].Y, points[i + 1].X, points[i + 1].Y);
+	}
+
+	for each (Point p in points)
+	{
+		gr->FillEllipse(Brushes::Red, p.X - 7, p.Y - 7, 15, 15);
+	}
+
+	if (points->Count == 4)
+	{
+
+		BSpline^ s = gcnew BSpline(points);
+		s->FindPoints();
+		bSplines->Clear();
+		bSplines->Add(s);
+	}	
+
+	if (points->Count > 4)
+	{
+		List<Point>^ bsp = gcnew List<Point>();
+		bsp->Clear();
+		bSplines->Clear();
+
+		bsp->Add(points[0]);
+		bsp->Add(points[1]);
+		bsp->Add(points[2]);
+		bsp->Add(points[3]);
+
+		BSpline^ bs = gcnew BSpline(bsp);
+		bs->FindPoints();
+
+		bSplines->Add(bs);
+
+		for (int i = 1; i < points->Count - 3; i++)
+		{
+			bsp->Clear();
+		
+			bsp->Add(points[i]);
+			bsp->Add(points[i + 1]);
+			bsp->Add(points[i + 2]);
+			bsp->Add(points[i + 3]);
+
+			BSpline^ bs = gcnew BSpline(bsp);
+			bs->FindPoints();
+			
+			bSplines->Add(bs);
+		}
+		
+
+		/*bsp->Add(points[points->Count - 4]);
+		bsp->Add(points[points->Count - 3]);
+		bsp->Add(points[points->Count - 2]);
+		bsp->Add(points[points->Count - 1]);
+
+		BSpline^ bs = gcnew BSpline(bsp);
+		bs->FindPoints();
+
+		bSplines->Add(bs);		*/
+	}
+
+	delete gr;
+	delete bluePen;
+	delete blackPen;
+	
+	return DrawBSplinesUsingList(bm);
+}
+
+Bitmap ^ CurvesDrawing::DrawBSplinesUsingList(Bitmap^ bm)
+{
+	Graphics^ gr = Graphics::FromImage(bm);
+	Pen^ bluePen = gcnew Pen(Color::Blue, 3);
+	Pen^ blackPen = gcnew Pen(Color::Green, 0.01f);
+
+	for each (BSpline^ bs in bSplines)
+	{
+		for (int i = 0; i < bs->points->Count - 1; i++)
+		{
+			gr->DrawLine(bluePen, bs->points[i].X, bs->points[i].Y, bs->points[i + 1].X, bs->points[i + 1].Y);
+		}		
 	}
 
 	delete gr;
