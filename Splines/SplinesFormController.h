@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CurvesDrawing.h"
+#include "Marker.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -12,17 +13,31 @@ ref class SplinesFormController
 
 private:
 	PictureBox^ pictureBox;
-	List<Point>^ referenceVertices;
-	CurvesDrawing^ curvesDrawing;
-
-	List<Point>^ compositeCurvesReferenceVertices;
+	
 
 public:
+
+	List<Point>^ referenceVertices;
+	List<Point>^ compositeCurvesReferenceVertices;
+	List<Point>^ bSplinesCurveVertices;
+
+	CurvesDrawing^ curvesDrawing;
+
+
+
+	bool isDrag = false;
+
+	List<Marker^>^ markers;
+
 	SplinesFormController(PictureBox^ pb);
 	~SplinesFormController();
 
-	void OnBezierCurveArbitaryOrderRadioButtonChecked(Point point);
-	void OnBezierCurveCompositeRadioButton(Point point);
+	void OnBezierCurveArbitaryOrderRadioButtonChecked(Point point, bool addToList);
+	void OnBezierCurveCompositeRadioButton(Point point, bool addToList);
+	void OnBSplineCurveRadioButton(Point p);
+
 	void OnCloseCurveButtonClick();
+
+	int ChooseMarker(Point p);
 };
 

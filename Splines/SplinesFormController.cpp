@@ -8,10 +8,13 @@ SplinesFormController::SplinesFormController(PictureBox^ pb)
 	referenceVertices = gcnew List<Point>();
 	curvesDrawing = gcnew CurvesDrawing();
 	compositeCurvesReferenceVertices = gcnew List<Point>();
+	bSplinesCurveVertices = gcnew List<Point>();
 
-	Bitmap^ bm = gcnew Bitmap(800, 600);
+	Bitmap^ bm = gcnew Bitmap(1920, 1080);
 
 	pictureBox->Image = bm;
+
+	markers = gcnew List<Marker^>();
 }
 
 
@@ -19,11 +22,17 @@ SplinesFormController::~SplinesFormController()
 {
 }
 
-void SplinesFormController::OnBezierCurveArbitaryOrderRadioButtonChecked(Point point)
+void SplinesFormController::OnBezierCurveArbitaryOrderRadioButtonChecked(Point point, bool addToList)
 {
-	referenceVertices->Add(point);
+	if (addToList)
+	{
+		referenceVertices->Add(point);
+		Marker^ marker = gcnew Marker(point.X, point.Y);
 
-	if (referenceVertices->Count > 1)
+		markers->Add(marker);
+	}	
+
+	if (referenceVertices->Count > 0)
 	{
 		Bitmap^ bm = gcnew Bitmap(pictureBox->Image->Width, pictureBox->Image->Height);
 		Bitmap^ resultImage = curvesDrawing->DrawBrezierCurves(bm, referenceVertices);
@@ -33,43 +42,38 @@ void SplinesFormController::OnBezierCurveArbitaryOrderRadioButtonChecked(Point p
 	}
 }
 
-void SplinesFormController::OnBezierCurveCompositeRadioButton(Point point)
+void SplinesFormController::OnBezierCurveCompositeRadioButton(Point point, bool addToList)
 {
-	compositeCurvesReferenceVertices->Add(point);
+
+	if (addToList)
+	{
+		compositeCurvesReferenceVertices->Add(point);
+		Marker^ marker = gcnew Marker(point.X, point.Y);
+
+		markers->Add(marker);
+	}
+	
 
 	Bitmap^ bm = gcnew Bitmap(pictureBox->Image);
 	Bitmap^ resultImage = curvesDrawing->DrawBrezierThirdOrder(bm, compositeCurvesReferenceVertices);
 
 	delete pictureBox->Image;
 	pictureBox->Image = resultImage;
-	/*if (compositeCurvesReferenceVertices->Count == 4)
+
+}
+
+void SplinesFormController::OnBSplineCurveRadioButton(Point p)
+{
+	bSplinesCurveVertices->Add(p);
+
+	if (bSplinesCurveVertices->Count > 3)
 	{
-		Bitmap^ bm = gcnew Bitmap(pictureBox->Image->Width, pictureBox->Image->Height);
-		Bitmap^ resultImage = curvesDrawing->DrawBrezierCurves(bm, compositeCurvesReferenceVertices);
+		Bitmap^ bm = gcnew Bitmap(pictureBox->Image);
+		Bitmap^ resultImage = curvesDrawing->DrawBSplines(bm, bSplinesCurveVertices);
 
 		delete pictureBox->Image;
 		pictureBox->Image = resultImage;
 	}
-
-	if (compositeCurvesReferenceVertices->Count > 4 && (compositeCurvesReferenceVertices->Count - 1) % 3 == 0)
-	{
-		int deltaX = compositeCurvesReferenceVertices[compositeCurvesReferenceVertices->Count - 4].X -
-			compositeCurvesReferenceVertices[compositeCurvesReferenceVertices->Count - 5].X;
-		int deltaY = compositeCurvesReferenceVertices[compositeCurvesReferenceVertices->Count - 4].Y -
-			compositeCurvesReferenceVertices[compositeCurvesReferenceVertices->Count - 5].Y;
-
-		compositeCurvesReferenceVertices[compositeCurvesReferenceVertices->Count - 3].X =
-			compositeCurvesReferenceVertices[compositeCurvesReferenceVertices->Count - 4].X + deltaX;
-
-		compositeCurvesReferenceVertices[compositeCurvesReferenceVertices->Count - 3].Y =
-			compositeCurvesReferenceVertices[compositeCurvesReferenceVertices->Count - 4].X + deltaY;
-
-		Bitmap^ bm = gcnew Bitmap(pictureBox->Image);
-		Bitmap^ resultImage = curvesDrawing->DrawBrezierCurves(bm, compositeCurvesReferenceVertices);
-
-		delete pictureBox->Image;
-		pictureBox->Image = resultImage;
-	}*/
 }
 
 void SplinesFormController::OnCloseCurveButtonClick()
@@ -79,4 +83,38 @@ void SplinesFormController::OnCloseCurveButtonClick()
 
 	delete pictureBox->Image;
 	pictureBox->Image = resultImage;
+
+	compositeCurvesReferenceVertices->Clear();
+
+}
+
+int SplinesFormController::ChooseMarker(Point p)
+{
+	int min = 100000;
+	int d = 0;
+	int index = -1;
+
+	if (markers->Count == 0)
+	{
+		return -1;
+	}
+
+	for each (Marker^ m in markers)
+	{
+		int r = m->radius;
+
+		if ((p.X <= m->x + r) && (p.X >= m->x - r) && (p.Y <= m->y + r) && (p.Y >= m->y - r))
+		{
+			d = sqrt((p.X - m->x) * (p.X - m->x) + (p.Y - m->y) * (p.Y - m->y));
+
+			if (d < min)
+			{
+				min = d;
+				index = markers->IndexOf(m);
+			}
+		}
+	}
+
+	return index;
+
 }

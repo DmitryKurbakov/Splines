@@ -12,6 +12,8 @@ public:
 	List<PointF>^ brezierCurvesPointsList;
 	List<PointF>^ brezierCompositeCurve;
 
+	List<PointF> bSplinesCurve;
+
 	Algorithms();
 	~Algorithms();
 
