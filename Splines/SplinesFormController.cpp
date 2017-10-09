@@ -48,9 +48,9 @@ void SplinesFormController::OnBezierCurveCompositeRadioButton(Point point, bool 
 	if (addToList)
 	{
 		compositeCurvesReferenceVertices->Add(point);
-		Marker^ marker = gcnew Marker(point.X, point.Y);
+		//Marker^ marker = gcnew Marker(point.X, point.Y);
 
-		markers->Add(marker);
+		//markers->Add(marker);
 	}
 	
 

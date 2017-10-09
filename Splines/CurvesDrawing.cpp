@@ -122,7 +122,6 @@ Bitmap ^ CurvesDrawing::DrawBrezierThirdOrder(Bitmap ^ bm, List<Point>^ points)
 Bitmap ^ CurvesDrawing::DrawCloseCurve(Bitmap ^ bm, List<Point>^ points)
 {
 
-
 	Graphics^ gr = Graphics::FromImage(bm);
 	Pen^ bluePen = gcnew Pen(Color::Blue, 3);
 	Pen^ blackPen = gcnew Pen(Color::Black, 0.01f);
