@@ -18,6 +18,8 @@ public:
 	SplinesFormController^ controller;
 private: System::Windows::Forms::RadioButton^  bSplineCurveRadioButton;
 private: System::Windows::Forms::Button^  closeBSplineButton;
+private: System::Windows::Forms::MenuStrip^  menuStrip1;
+private: System::Windows::Forms::ToolStripMenuItem^  оПрограммеToolStripMenuItem;
 public:
 	int mi = -1;
 
@@ -70,15 +72,18 @@ private:
 		this->pictureGroupBox = (gcnew System::Windows::Forms::GroupBox());
 		this->pictureBox = (gcnew System::Windows::Forms::PictureBox());
 		this->toolsGroupBox = (gcnew System::Windows::Forms::GroupBox());
+		this->clearButton = (gcnew System::Windows::Forms::Button());
 		this->closeBSplineButton = (gcnew System::Windows::Forms::Button());
 		this->bSplineCurveRadioButton = (gcnew System::Windows::Forms::RadioButton());
 		this->closeCurveButton = (gcnew System::Windows::Forms::Button());
 		this->bezierCurveCompositeRadioButton = (gcnew System::Windows::Forms::RadioButton());
 		this->bezierCurveElementaryRadioButton = (gcnew System::Windows::Forms::RadioButton());
-		this->clearButton = (gcnew System::Windows::Forms::Button());
+		this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+		this->оПрограммеToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 		this->pictureGroupBox->SuspendLayout();
 		(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->BeginInit();
 		this->toolsGroupBox->SuspendLayout();
+		this->menuStrip1->SuspendLayout();
 		this->SuspendLayout();
 		// 
 		// pictureGroupBox
@@ -87,9 +92,9 @@ private:
 			| System::Windows::Forms::AnchorStyles::Left)
 			| System::Windows::Forms::AnchorStyles::Right));
 		this->pictureGroupBox->Controls->Add(this->pictureBox);
-		this->pictureGroupBox->Location = System::Drawing::Point(169, 12);
+		this->pictureGroupBox->Location = System::Drawing::Point(169, 27);
 		this->pictureGroupBox->Name = L"pictureGroupBox";
-		this->pictureGroupBox->Size = System::Drawing::Size(499, 423);
+		this->pictureGroupBox->Size = System::Drawing::Size(499, 408);
 		this->pictureGroupBox->TabIndex = 0;
 		this->pictureGroupBox->TabStop = false;
 		this->pictureGroupBox->Text = L"Изображение";
@@ -102,7 +107,7 @@ private:
 		this->pictureBox->BackColor = System::Drawing::SystemColors::ControlLightLight;
 		this->pictureBox->Location = System::Drawing::Point(6, 19);
 		this->pictureBox->Name = L"pictureBox";
-		this->pictureBox->Size = System::Drawing::Size(487, 398);
+		this->pictureBox->Size = System::Drawing::Size(487, 383);
 		this->pictureBox->TabIndex = 0;
 		this->pictureBox->TabStop = false;
 		this->pictureBox->Click += gcnew System::EventHandler(this, &SplinesForm::pictureBox_Click);
@@ -120,12 +125,25 @@ private:
 		this->toolsGroupBox->Controls->Add(this->closeCurveButton);
 		this->toolsGroupBox->Controls->Add(this->bezierCurveCompositeRadioButton);
 		this->toolsGroupBox->Controls->Add(this->bezierCurveElementaryRadioButton);
-		this->toolsGroupBox->Location = System::Drawing::Point(12, 12);
+		this->toolsGroupBox->Location = System::Drawing::Point(12, 27);
 		this->toolsGroupBox->Name = L"toolsGroupBox";
-		this->toolsGroupBox->Size = System::Drawing::Size(151, 423);
+		this->toolsGroupBox->Size = System::Drawing::Size(151, 408);
 		this->toolsGroupBox->TabIndex = 1;
 		this->toolsGroupBox->TabStop = false;
 		this->toolsGroupBox->Text = L"Инструменты";
+		// 
+		// clearButton
+		// 
+		this->clearButton->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+		this->clearButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			static_cast<System::Byte>(204)));
+		this->clearButton->Location = System::Drawing::Point(6, 379);
+		this->clearButton->Name = L"clearButton";
+		this->clearButton->Size = System::Drawing::Size(53, 23);
+		this->clearButton->TabIndex = 2;
+		this->clearButton->Text = L"Очистить";
+		this->clearButton->UseVisualStyleBackColor = true;
+		this->clearButton->Click += gcnew System::EventHandler(this, &SplinesForm::clearButton_Click);
 		// 
 		// closeBSplineButton
 		// 
@@ -194,18 +212,21 @@ private:
 		this->bezierCurveElementaryRadioButton->UseVisualStyleBackColor = true;
 		this->bezierCurveElementaryRadioButton->CheckedChanged += gcnew System::EventHandler(this, &SplinesForm::OnCheckedChanged);
 		// 
-		// clearButton
+		// menuStrip1
 		// 
-		this->clearButton->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-		this->clearButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-			static_cast<System::Byte>(204)));
-		this->clearButton->Location = System::Drawing::Point(6, 394);
-		this->clearButton->Name = L"clearButton";
-		this->clearButton->Size = System::Drawing::Size(53, 23);
-		this->clearButton->TabIndex = 2;
-		this->clearButton->Text = L"Очистить";
-		this->clearButton->UseVisualStyleBackColor = true;
-		this->clearButton->Click += gcnew System::EventHandler(this, &SplinesForm::clearButton_Click);
+		this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->оПрограммеToolStripMenuItem });
+		this->menuStrip1->Location = System::Drawing::Point(0, 0);
+		this->menuStrip1->Name = L"menuStrip1";
+		this->menuStrip1->Size = System::Drawing::Size(680, 24);
+		this->menuStrip1->TabIndex = 2;
+		this->menuStrip1->Text = L"menuStrip";
+		// 
+		// оПрограммеToolStripMenuItem
+		// 
+		this->оПрограммеToolStripMenuItem->Name = L"оПрограммеToolStripMenuItem";
+		this->оПрограммеToolStripMenuItem->Size = System::Drawing::Size(94, 20);
+		this->оПрограммеToolStripMenuItem->Text = L"О программе";
+		this->оПрограммеToolStripMenuItem->Click += gcnew System::EventHandler(this, &SplinesForm::оПрограммеToolStripMenuItem_Click);
 		// 
 		// SplinesForm
 		// 
@@ -214,13 +235,18 @@ private:
 		this->ClientSize = System::Drawing::Size(680, 447);
 		this->Controls->Add(this->toolsGroupBox);
 		this->Controls->Add(this->pictureGroupBox);
+		this->Controls->Add(this->menuStrip1);
+		this->MainMenuStrip = this->menuStrip1;
 		this->Name = L"SplinesForm";
-		this->Text = L"SplinesForm";
+		this->Text = L"Семнар 3. Кривые. Курбаков Д.С.";
 		this->pictureGroupBox->ResumeLayout(false);
 		(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->EndInit();
 		this->toolsGroupBox->ResumeLayout(false);
 		this->toolsGroupBox->PerformLayout();
+		this->menuStrip1->ResumeLayout(false);
+		this->menuStrip1->PerformLayout();
 		this->ResumeLayout(false);
+		this->PerformLayout();
 
 	}
 #pragma endregion
@@ -274,6 +300,9 @@ private: System::Void closeBSplineButton_Click(System::Object^  sender, System::
 	controller->OnCloseBSplineButtonClick();
 }
 		 void OnCheckedbSplineChanged(System::Object ^sender, System::EventArgs ^e);
+private: System::Void оПрограммеToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	MessageBox::Show("Семинар 3. Кривые\nКурбаков Д.С. БПИ143\nНа панели Инструменты расположены элементы для рисования.\nVisual Studio 2017\ni7-7700, 8gb ram, GTX1070\n09.10.2017");
+}
 };
 
 
